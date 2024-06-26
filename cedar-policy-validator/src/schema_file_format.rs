@@ -39,7 +39,16 @@ use crate::{
     },
     HumanSchemaError, HumanSyntaxParseError, RawName,
 };
+use std::str::FromStr;
 
+lazy_static::lazy_static! {
+    /// The stand in for the "unspecified" entity type removed by RFC 55
+    pub static ref DEFAULT_CEDAR_TYPE : Name = {
+        // PANIC SAFETY: unwrapping a constant
+        #[allow(clippy::unwrap_used)]
+        Name::from_str("__cedar::default").unwrap()
+    };
+}
 /// A [`SchemaFragment`] is split into multiple namespace definitions, and is just
 /// a map from namespace name to namespace definition (i.e., definitions of
 /// common types, entity types, and actions in that namespace).
